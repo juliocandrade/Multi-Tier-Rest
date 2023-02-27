@@ -154,6 +154,7 @@ end;
 
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
 begin
+  dmPrincipal.ServerURL('http://localhost:3000');
   AplicarEstilo;
   FTypeOperacao := toNull;
   FController := TController.New;

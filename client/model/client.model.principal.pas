@@ -57,7 +57,7 @@ implementation
 
 procedure TdmPrincipal.DataModuleCreate(Sender: TObject);
 begin
-  FServerURL := 'http://localhost:3000';
+  ServerURL('http://localhost:3000');
 end;
 
 procedure TdmPrincipal.Pesquisar;
@@ -76,6 +76,7 @@ end;
 procedure TdmPrincipal.ServerURL(aValue: String);
 begin
   FServerURL := aValue;
+  RestClientPessoa.BaseURL := FServerURL;
 end;
 
 end.
