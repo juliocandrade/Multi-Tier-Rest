@@ -1,6 +1,6 @@
 unit client.model.service.rest.impl.clientrest;
-todo
-criar fabricas dto, rest,
+
+
 interface
 
 uses
@@ -19,6 +19,7 @@ type
     FParams : iRestParams;
     FContent : String;
     procedure DoJoinComponents;
+    procedure TratarStatusResposta;
   public
     constructor Create;
     destructor Destroy; override;
@@ -37,7 +38,8 @@ implementation
 uses
   System.SysUtils,
   System.Classes,
-  client.model.service.rest.impl.ClientRest.Params;
+  client.model.service.rest.impl.ClientRest.Params,
+  System.JSON;
 
 { TClientRest }
 
@@ -54,6 +56,7 @@ begin
   FRESTRequest := TRestRequest.Create(nil);
   FRestRequest.SynchronizedEvents := False;
   FParams := TClientRestParams.New(Self);
+  FParams.Accept(CONTENTTYPE_APPLICATION_JSON + ', ' + CONTENTTYPE_TEXT_PLAIN + '; q=0.9, ' + CONTENTTYPE_TEXT_HTML + ';q=0.8,');
   DoJoinComponents;
 
 end;
@@ -65,6 +68,7 @@ begin
   FRestRequest.Resource := FParams.EndPoint;
   FRestRequest.Accept := CONTENTTYPE_APPLICATION_JSON + ', ' + CONTENTTYPE_TEXT_PLAIN + '; q=0.9, ' + CONTENTTYPE_TEXT_HTML + ';q=0.8,';
   FRestRequest.AcceptCharset := 'utf-8, *;q=0.8';
+  TratarStatusResposta;
   FRestRequest.Execute;
   FContent := FRestResponse.Content;
 
@@ -76,6 +80,25 @@ begin
   FreeAndNil(FRESTResponse);
   FreeAndNil(FRESTRequest);
   inherited;
+end;
+
+procedure TClientRest.TratarStatusResposta;
+var
+  LJSONError : TJSONObject;
+  LMensagemErro : String;
+begin
+  if FRESTResponse.StatusCode > 399 then
+  begin
+    LJSONError := TJSONObject.ParseJSONValue(FRESTResponse.Content) as TJSONObject;
+    try
+      if LJSONError.TryGetValue<string>('error', LMensagemErro) then
+        raise Exception.Create(LMensagemErro)
+      else
+        raise Exception.Create(FRESTResponse.Content);
+    finally
+      LJSONError.Free;
+    end;
+  end;
 end;
 
 procedure TClientRest.DoJoinComponents;
@@ -92,6 +115,7 @@ begin
   FRestRequest.Accept := CONTENTTYPE_APPLICATION_JSON + ', ' + CONTENTTYPE_TEXT_PLAIN + '; q=0.9, ' + CONTENTTYPE_TEXT_HTML + ';q=0.8,';
   FRestRequest.AcceptCharset := 'utf-8, *;q=0.8';
   FRestRequest.Execute;
+  TratarStatusResposta;
   FContent := FRestResponse.Content;
 end;
 
@@ -107,12 +131,28 @@ end;
 
 function TClientRest.Post: iRest;
 begin
-
+  FRestClient.BaseURL := FParams.BaseURL;
+  FRestRequest.Method := rmPOST;
+  FRestRequest.Resource := FParams.EndPoint;
+  FRestRequest.Accept := FParams.Accept;
+  FRestRequest.AcceptCharset := 'utf-8, *;q=0.8';
+  FRESTRequest.AddBody(FParams.Body, TRESTContentType.ctAPPLICATION_JSON);
+  FRestRequest.Execute;
+  TratarStatusResposta;
+  FContent := FRestResponse.Content;
 end;
 
 function TClientRest.Put: iRest;
 begin
-
+  FRestClient.BaseURL := FParams.BaseURL;
+  FRestRequest.Method := rmPUT;
+  FRestRequest.Resource := FParams.EndPoint;
+  FRestRequest.Accept := FParams.Accept;
+  FRestRequest.AcceptCharset := 'utf-8, *;q=0.8';
+  FRESTRequest.AddBody(FParams.Body, TRESTContentType.ctAPPLICATION_JSON);
+  FRestRequest.Execute;
+  TratarStatusResposta;
+  FContent := FRestResponse.Content;
 end;
 
 end.

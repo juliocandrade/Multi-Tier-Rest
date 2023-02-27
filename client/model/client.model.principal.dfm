@@ -1,5 +1,6 @@
-object dmPessoa: TdmPessoa
+object dmPrincipal: TdmPrincipal
   OldCreateOrder = False
+  OnCreate = DataModuleCreate
   Height = 498
   Width = 719
   object RestClientPessoa: TRESTClient

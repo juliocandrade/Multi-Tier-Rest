@@ -1,4 +1,4 @@
-unit client.model.pessoa;
+unit client.model.principal;
 
 interface
 
@@ -10,7 +10,7 @@ uses
   Data.Bind.ObjectScope;
 
 type
-  TdmPessoa = class(TDataModule)
+  TdmPrincipal = class(TDataModule)
     RestClientPessoa: TRESTClient;
     RestRequestPessoa: TRESTRequest;
     RestResponsePessoa: TRESTResponse;
@@ -33,15 +33,19 @@ type
     FDMemTablePessoaenderecointegracaobairro: TWideStringField;
     FDMemTablePessoaenderecointegracaologradouro: TWideStringField;
     FDMemTablePessoaenderecointegracaocomplemento: TWideStringField;
+    procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
+    FServerURL : String;
   public
     { Public declarations }
     procedure Pesquisar;
+      procedure ServerURL(aValue : String);  overload;
+      function ServerURL : String; overload;
   end;
 
 var
-  dmPessoa: TdmPessoa;
+  dmPrincipal: TdmPrincipal;
 
 implementation
 
@@ -51,12 +55,27 @@ implementation
 
 { TdmPessoa }
 
-procedure TdmPessoa.Pesquisar;
+procedure TdmPrincipal.DataModuleCreate(Sender: TObject);
+begin
+  FServerURL := 'http://localhost:3000';
+end;
+
+procedure TdmPrincipal.Pesquisar;
 var
   x : String;
 begin
   RESTRequestPessoa.Execute;
   X:= RestResponsePessoa.Content;
+end;
+
+function TdmPrincipal.ServerURL: String;
+begin
+  Result := FServerURL;
+end;
+
+procedure TdmPrincipal.ServerURL(aValue: String);
+begin
+  FServerURL := aValue;
 end;
 
 end.

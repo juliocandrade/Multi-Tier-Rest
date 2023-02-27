@@ -102,8 +102,8 @@
             <Form>frmPrincipal</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="model\client.model.pessoa.pas">
-            <Form>dmPessoa</Form>
+        <DCCReference Include="model\client.model.principal.pas">
+            <Form>dmPrincipal</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
@@ -122,6 +122,9 @@
         <DCCReference Include="controller\client.controller.interfaces.pas"/>
         <DCCReference Include="model\dao\client.model.dao.Interfaces.pas"/>
         <DCCReference Include="model\dao\impl\client.model.dao.impl.pessoa.pas"/>
+        <DCCReference Include="model\service\impl\client.model.services.impl.factory.pas"/>
+        <DCCReference Include="model\service\client.model.service.interfaces.pas"/>
+        <DCCReference Include="model\dao\impl\client.model.dao.impl.factory.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

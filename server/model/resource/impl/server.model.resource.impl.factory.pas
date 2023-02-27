@@ -14,7 +14,6 @@ type
     class function Configuracao : iConfiguracao;
     class function Query(aConexao : iConexao) : iQuery;
     class function Conexao : iConexao;
-
   end;
 implementation
 

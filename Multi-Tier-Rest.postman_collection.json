@@ -1,0 +1,155 @@
+{
+	"info": {
+		"_postman_id": "79dd10fb-728e-4371-a6df-eb9e13d49727",
+		"name": "Multi-Tier-Rest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15419164"
+	},
+	"item": [
+		{
+			"name": "Pessoas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/pessoas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"pessoas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pessoas ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/pessoas/130",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"pessoas",
+						"130"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pessoas",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/pessoas/24",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"pessoas",
+						"24"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pessoas",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"natureza\": 2,\"documento\": \"123\",\"primeironome\": \"pessoa\",\"segundonome\": \"pessoa2\",\"endereco\": {\"cep\": \"28941348\"}}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/pessoas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"pessoas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pessoas Lote",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\"natureza\": 2,\"documento\": \"1\",\"primeironome\": \"pessoa1\",\"segundonome\": \"pessoa1\",\"endereco\": {\"cep\": \"28941348\"}},{\"natureza\": 2,\"documento\": \"2\",\"primeironome\": \"pessoa2\",\"segundonome\": \"pessoa2\",\"endereco\": {\"cep\": \"28941348\"}},{\"natureza\": 2,\"documento\": \"3\",\"primeironome\": \"pessoa3\",\"segundonome\": \"pessoa3\",\"endereco\": {\"cep\": \"28941348\"}},{\"natureza\": 2,\"documento\": \"4\",\"primeironome\": \"pessoa4\",\"segundonome\": \"pessoa4\",\"endereco\": {\"cep\": \"28941348\"}}]\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/pessoas/lote",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"pessoas",
+						"lote"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pessoas",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"natureza\": 2,\"documento\": \"22222\",\"primeironome\": \"Julio1\",\"segundonome\": \"Cesar1\",\"endereco\": {\"cep\": \"11111111\"}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/pessoas/25",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"pessoas",
+						"25"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

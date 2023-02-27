@@ -77,7 +77,7 @@ end;
 function TModelPessoa.GetDocumento: string;
 begin
   if FDocumento.isEmpty then
-    raise Exception..Create('Documento não informado');
+    raise Exception.Create('Documento não informado');
   Result := FDocumento;
 end;
 

@@ -21,7 +21,7 @@ uses
   server.controller.dto.interfaces in 'controller\dto\server.controller.dto.interfaces.pas',
   server.controller.interfaces in 'controller\server.controller.interfaces.pas',
   server.controller.impl.controller in 'controller\impl\server.controller.impl.controller.pas',
-  server.utils in 'utils\server.utils.pas' {/  server.model.service.impl.ClientRest in 'model\service\impl\server.model.service.impl.ClientRest.pas',},
+  server.utils in 'utils\server.utils.pas',
   server.model.service.cep.impl.viacep in 'model\service\cep\impl\server.model.service.cep.impl.viacep.pas',
   server.model.dao.impl.endereco.integracao in 'model\dao\impl\server.model.dao.impl.endereco.integracao.pas',
   server.model.service.cep.interfaces in 'model\service\cep\server.model.service.cep.interfaces.pas',

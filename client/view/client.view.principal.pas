@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.StdCtrls, Vcl.WinXPanels,
-  Vcl.Grids, Vcl.DBGrids, Vcl.Buttons, Vcl.ExtCtrls;
+  Vcl.Grids, Vcl.DBGrids, Vcl.Buttons, Vcl.ExtCtrls, client.controller.interfaces;
 
 type
   TTypeOperacao = (toNull, toIncluir, toAlterar);
@@ -68,6 +68,7 @@ type
   private
     { Private declarations }
     FTypeOperacao : TTypeOperacao;
+    FController : iController;
     procedure AplicarEstilo;
     procedure LimparCampos;
     procedure Pesquisar;
@@ -84,7 +85,9 @@ implementation
 {$R *.dfm}
 
 uses
-  client.model.pessoa, client.view.Style;
+  client.model.principal,
+  client.view.Style,
+  client.controller.impl.factory;
 
 { Tfrm }
 
@@ -102,9 +105,14 @@ end;
 
 procedure TfrmPrincipal.btnExcluirClick(Sender: TObject);
 begin
+  FController
+    .Pessoa
+      .ID(edtID.Text)
+      .Services
+        .Excluir;
+
   CardPanel1.ActiveCard := CardGrid;
   Pesquisar;
-
 end;
 
 procedure TfrmPrincipal.btnFecharClick(Sender: TObject);
@@ -122,9 +130,20 @@ end;
 
 procedure TfrmPrincipal.btnSalvarClick(Sender: TObject);
 begin
+  FController
+    .Pessoa
+      .Natureza(edtNatureza.Text)
+      .Documento(edtDocumento.Text)
+      .PrimeiroNome(edtPrimeiroNome.Text)
+      .SegundoNome(edtSegundoNome.Text)
+      .CEP(edtCEP.Text);
+
+  case FTypeOperacao of
+    toIncluir: FController.Pessoa.Services.Inserir;
+    toAlterar: FController.Pessoa.ID(edtID.Text).Services.Alterar;
+  end;
   CardPanel1.ActiveCard := CardGrid;
   Pesquisar;
-
 end;
 
 procedure TfrmPrincipal.CardPanel1CardChange(Sender: TObject; PrevCard,
@@ -136,10 +155,13 @@ end;
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
 begin
   AplicarEstilo;
+  FTypeOperacao := toNull;
+  FController := TController.New;
 end;
 
 procedure TfrmPrincipal.FormShow(Sender: TObject);
 begin
+  CardPanel1.ActiveCard := cardGrid;
   Pesquisar;
 end;
 
@@ -165,7 +187,7 @@ procedure TfrmPrincipal.Pesquisar;
 var
   s : string;
 begin
-  dmPessoa.Pesquisar;
+  dmPrincipal.Pesquisar;
   s := 's';
   if DataSource.DataSet.RecordCount = 1 then
     s := '';

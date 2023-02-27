@@ -24,7 +24,6 @@ object frmPrincipal: TfrmPrincipal
     BevelOuter = bvNone
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 789
     object pnlTop: TPanel
       Left = 0
       Top = 0
@@ -35,7 +34,6 @@ object frmPrincipal: TfrmPrincipal
       Padding.Left = 10
       ParentBackground = False
       TabOrder = 0
-      ExplicitWidth = 789
       object lblPage: TLabel
         Left = 10
         Top = 0
@@ -62,7 +60,6 @@ object frmPrincipal: TfrmPrincipal
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitWidth = 789
       object CardPanel1: TCardPanel
         Left = 0
         Top = 0
@@ -74,7 +71,6 @@ object frmPrincipal: TfrmPrincipal
         Caption = 'CardPanel'
         TabOrder = 0
         OnCardChange = CardPanel1CardChange
-        ExplicitWidth = 789
         object cardGrid: TCard
           Left = 0
           Top = 0
@@ -83,7 +79,6 @@ object frmPrincipal: TfrmPrincipal
           Caption = 'Grid'
           CardIndex = 0
           TabOrder = 0
-          ExplicitWidth = 789
           object pnlGridTop: TPanel
             Left = 0
             Top = 0
@@ -94,7 +89,6 @@ object frmPrincipal: TfrmPrincipal
             Padding.Left = 20
             Padding.Right = 20
             TabOrder = 0
-            ExplicitWidth = 789
             object btnNovo: TSpeedButton
               Left = 20
               Top = 0
@@ -145,7 +139,6 @@ object frmPrincipal: TfrmPrincipal
             Padding.Right = 20
             Padding.Bottom = 20
             TabOrder = 1
-            ExplicitWidth = 789
             object pnlGridBottom: TPanel
               Left = 20
               Top = 273
@@ -154,7 +147,6 @@ object frmPrincipal: TfrmPrincipal
               Align = alBottom
               BevelOuter = bvNone
               TabOrder = 0
-              ExplicitWidth = 749
               object lblRegistros: TLabel
                 Left = 0
                 Top = 0
@@ -170,7 +162,7 @@ object frmPrincipal: TfrmPrincipal
                 Font.Style = [fsBold]
                 ParentFont = False
                 Layout = tlCenter
-                ExplicitLeft = 677
+                ExplicitLeft = 700
                 ExplicitWidth = 72
                 ExplicitHeight = 18
               end
@@ -188,7 +180,6 @@ object frmPrincipal: TfrmPrincipal
               Padding.Bottom = 2
               ParentBackground = False
               TabOrder = 1
-              ExplicitWidth = 749
               object gridDados: TDBGrid
                 Left = 2
                 Top = 2
@@ -283,7 +274,6 @@ object frmPrincipal: TfrmPrincipal
           Caption = 'Cadastro'
           CardIndex = 1
           TabOrder = 1
-          ExplicitWidth = 789
           object pnlCadastroBody: TPanel
             Left = 0
             Top = 0
@@ -295,7 +285,6 @@ object frmPrincipal: TfrmPrincipal
             Padding.Right = 20
             Padding.Bottom = 20
             TabOrder = 0
-            ExplicitWidth = 789
             object pnlCadastroCampos: TPanel
               Left = 20
               Top = 0
@@ -307,7 +296,6 @@ object frmPrincipal: TfrmPrincipal
               Padding.Top = 20
               Padding.Right = 50
               TabOrder = 0
-              ExplicitWidth = 749
               object StackPessoa: TStackPanel
                 Left = 50
                 Top = 20
@@ -378,8 +366,6 @@ object frmPrincipal: TfrmPrincipal
                   end>
                 Spacing = 4
                 TabOrder = 0
-                ExplicitLeft = 394
-                ExplicitTop = 14
                 object Label1: TLabel
                   Left = 0
                   Top = 0
@@ -538,7 +524,6 @@ object frmPrincipal: TfrmPrincipal
                   end>
                 Spacing = 4
                 TabOrder = 1
-                ExplicitTop = 14
                 object Label7: TLabel
                   Left = 0
                   Top = 0
@@ -629,7 +614,6 @@ object frmPrincipal: TfrmPrincipal
               Align = alBottom
               BevelOuter = bvNone
               TabOrder = 1
-              ExplicitWidth = 749
               object btnSalvar: TSpeedButton
                 Left = 612
                 Top = 0
@@ -695,7 +679,7 @@ object frmPrincipal: TfrmPrincipal
   end
   object DataSource: TDataSource
     AutoEdit = False
-    DataSet = dmPessoa.FDMemTablePessoa
+    DataSet = dmPrincipal.FDMemTablePessoa
     Left = 728
     Top = 337
   end
