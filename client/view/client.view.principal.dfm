@@ -70,7 +70,6 @@ object frmPrincipal: TfrmPrincipal
         BevelOuter = bvNone
         Caption = 'CardPanel'
         TabOrder = 0
-        OnCardChange = CardPanel1CardChange
         object cardGrid: TCard
           Left = 0
           Top = 0
@@ -148,10 +147,10 @@ object frmPrincipal: TfrmPrincipal
               BevelOuter = bvNone
               TabOrder = 0
               object lblRegistros: TLabel
-                Left = 700
+                Left = 0
                 Top = 0
-                Width = 72
-                Height = 18
+                Width = 772
+                Height = 30
                 Align = alClient
                 Alignment = taRightJustify
                 Caption = 'Registros'
@@ -162,6 +161,9 @@ object frmPrincipal: TfrmPrincipal
                 Font.Style = [fsBold]
                 ParentFont = False
                 Layout = tlCenter
+                ExplicitLeft = 700
+                ExplicitWidth = 72
+                ExplicitHeight = 18
               end
             end
             object pnlGrid: TPanel

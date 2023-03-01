@@ -50,7 +50,7 @@ begin
          LenderecoIntegracao.Bairro := LConsultaCEP.Bairro;
          LenderecoIntegracao.Logradouro := LConsultaCEP.Logradouro;
          LenderecoIntegracao.Complemento := LConsultaCEP.Complemento;
-         TDAOFactory.New.EnderecoIntegracao(LEnderecoIntegracao).Inserir;
+         TDAOFactory.New.EnderecoIntegracao(LEnderecoIntegracao).Alterar;
         finally
           LEnderecoIntegracao.Free;
         end;

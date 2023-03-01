@@ -4,17 +4,17 @@ interface
 uses
   System.Generics.Collections,
   System.Classes,
-  Data.DB,
   server.model.dao.interfaces,
-  server.model.entity.pessoa;
+  server.model.entity.pessoa,
+  server.model.resource.interfaces;
 
 type
   TDAOPessoa = class(TInterfacedObject, iDAOPessoa)
   private
     FParent : TModelPessoa;
     FList : TObjectList<TModelPessoa>;
-    procedure DatasetToList(aDataSet : TDataset);
-    procedure DatasetToEntity(APessoa : TModelPessoa; aDataSet : TDataset);
+    procedure DatasetToList(aQuery : iQuery);
+    procedure DatasetToEntity(APessoa : TModelPessoa; aQuery : iQuery);
     procedure SQLPessoa(SQL : TStrings);
   public
     constructor Create(aParent : TModelPessoa);
@@ -35,8 +35,9 @@ uses
   REST.Json,
   System.JSON,
   System.SysUtils,
-  server.model.resource.interfaces,
-  server.model.resource.impl.factory;
+  server.model.resource.impl.factory,
+  server.model.dao.impl.endereco,
+  server.model.dao.impl.endereco.integracao;
 
 { TDAOPessoa }
 
@@ -44,34 +45,36 @@ function TDAOPessoa.Alterar: iDaoPessoa;
 var
   LConexao : iConexao;
   LQueryPessoa : iQuery;
-  LQueryEndereco : iQuery;
+  LDAOEndereco : iDAOEndereco;
+  LDAOEnderecoIntegracao : iDAOEnderecoIntegracao;
 begin
   Result := Self;
   LConexao := TResourceFactory.Conexao;
   LQueryPessoa := TResourceFactory.Query(LConexao);
-  LQueryEndereco := TResourceFactory.Query(LConexao);
+  LDAOEndereco := TDAOEndereco.New(FParent.Endereco);
+  LDAOEnderecoIntegracao := TDAOEnderecoIntegracao.New(FParent.EnderecoIntegracao);
+
   LQueryPessoa.SQL.Add('UPDATE pessoa SET flnatureza = :flnatureza, dsdocumento = :dsdocumento, ');
-  LQueryPessoa.SQL.Add('nmprimeiro = :nmprimeiro, nmsegundo = :nmsegundo WHERE idpessoa = :idpessoa');
+  LQueryPessoa.SQL.Add('nmprimeiro = :nmprimeiro, nmsegundo = :nmsegundo WHERE idpessoa = :idpessoa ');
+  LQueryPessoa.SQL.Add('RETURNING *');
   LQueryPessoa.Params.ParamByName('flnatureza').AsInteger := FParent.Natureza;
   LQueryPessoa.Params.ParamByName('dsdocumento').AsString := FParent.Documento;
   LQueryPessoa.Params.ParamByName('nmprimeiro').AsString := FParent.PrimeiroNome;
   LQueryPessoa.Params.ParamByName('nmsegundo').AsString := FParent.SegundoNome;
   LQueryPessoa.Params.ParamByName('idpessoa').AsLargeInt := FParent.ID;
 
-  LQueryEndereco.SQL.Add('UPDATE endereco SET dscep = :dscep WHERE idpessoa = :idpessoa');
-  LQueryEndereco.Params.ParamByName('dscep').AsString := FParent.Endereco.CEP;
-  LQueryEndereco.Params.ParamByName('idpessoa').AsLargeInt := FParent.ID;
-
   LConexao.StartTransaction;
   try
-    LQueryPessoa.ExecSQL;
-    LQueryEndereco.ExecSQL;
+    LQueryPessoa.Open;
+    FParent.Endereco.IDPessoa := FParent.ID;
+    LDAOEndereco.Alterar(LConexao);
+    FParent.EnderecoIntegracao.IDEndereco := FParent.Endereco.IDEndereco;
+    LDAOEnderecoIntegracao.Alterar(LConexao);
     LConexao.Commit;
   except
     LConexao.Rollback;
     raise;
   end;
-
 end;
 
 constructor TDAOPessoa.Create(aParent : TModelPessoa);
@@ -80,40 +83,32 @@ begin
   FList :=TObjectList<TModelPessoa>.Create;
 end;
 
-procedure TDAOPessoa.DatasetToEntity(APessoa : TModelPessoa; aDataSet: TDataset);
+procedure TDAOPessoa.DatasetToEntity(APessoa : TModelPessoa; aQuery : iQuery);
 begin
-    APessoa.ID := aDataset.FieldByName('idpessoa').AsLargeInt;
-    APessoa.Natureza := aDataset.FieldByName('flnatureza').AsInteger;
-    APessoa.Documento := aDataset.FieldByName('dsdocumento').AsString;
-    APessoa.PrimeiroNome := aDataset.FieldByName('nmprimeiro').AsString;
-    APessoa.SegundoNome := aDataset.FieldByName('nmsegundo').AsString;
-    APessoa.DataRegistro := aDataset.FieldByName('dtregistro').AsDateTime;
+    APessoa.ID := aQuery.Dataset.FieldByName('idpessoa').AsLargeInt;
+    APessoa.Natureza := aQuery.Dataset.FieldByName('flnatureza').AsInteger;
+    APessoa.Documento := aQuery.Dataset.FieldByName('dsdocumento').AsString;
+    APessoa.PrimeiroNome := aQuery.Dataset.FieldByName('nmprimeiro').AsString;
+    APessoa.SegundoNome := aQuery.Dataset.FieldByName('nmsegundo').AsString;
+    APessoa.DataRegistro := aQuery.Dataset.FieldByName('dtregistro').AsDateTime;
 
-    APessoa.Endereco.IDEndereco := aDataset.FieldByName('idendereco').AsLargeInt;
-    APessoa.Endereco.IDPessoa := aDataset.FieldByName('eidpessoa').AsLargeInt;
-    APessoa.Endereco.CEP := aDataset.FieldByName('dscep').AsString;
-
-    APessoa.EnderecoIntegracao.IDEndereco := aDataset.FieldByName('iidendereco').AsLargeInt;
-    APessoa.EnderecoIntegracao.UF := aDataset.FieldByName('dsuf').AsString;
-    APessoa.EnderecoIntegracao.Cidade := aDataset.FieldByName('nmcidade').AsString;
-    APessoa.EnderecoIntegracao.Bairro := aDataset.FieldByName('nmbairro').AsString;
-    APessoa.EnderecoIntegracao.Logradouro := aDataset.FieldByName('nllogradouro').AsString;
-    APessoa.EnderecoIntegracao.Complemento := aDataset.FieldByName('dscomplemento').AsString;
+    TDAOEndereco.New(aPessoa.Endereco).DatasetToEntity(aPessoa.Endereco, aQuery);
+    TDAOEnderecoIntegracao.New(aPessoa.EnderecoIntegracao).DatasetToEntity(aPessoa.EnderecoIntegracao, aQuery);
 end;
 
-procedure TDAOPessoa.DatasetToList(aDataSet: TDataset);
+procedure TDAOPessoa.DatasetToList(aQuery : iQuery);
 var
   I: Integer;
   LPessoa : TModelPessoa;
 begin
   Flist.Clear;
-  aDataset.First;
-  for I := 0 to Pred(aDataset.RecordCount) do
+  aQuery.DataSet.First;
+  for I := 0 to Pred(aQuery.Dataset.RecordCount) do
   begin
     LPessoa := TModelPessoa.Create;
-    DatasetToEntity(LPessoa, aDataSet);
+    DatasetToEntity(LPessoa, aQuery);
     FList.Add(LPessoa);
-    aDataset.Next;
+    aQuery.Dataset.Next;
   end;
 end;
 
@@ -146,16 +141,18 @@ function TDAOPessoa.Inserir: iDAOPessoa;
 var
   LConexao : iConexao;
   LQueryPessoa : iQuery;
-  LQueryEndereco : iQuery;
-  LIdPessoa : int64;
+  LDAOEndereco : iDAOEndereco;
+  LDAOEnderecoIntegracao : iDAOEnderecoIntegracao;
 begin
   Result := Self;
   LConexao := TResourceFactory.Conexao;
   LQueryPessoa := TResourceFactory.Query(LConexao);
-  LQueryEndereco := TResourceFactory.Query(LConexao);
+  LDAOEndereco := TDAOEndereco.New(FParent.Endereco);
+  LDAOEnderecoIntegracao := TDAOEnderecoIntegracao.New(FParent.EnderecoIntegracao);
+
   LQueryPessoa.SQL.Add('INSERT INTO pessoa (flnatureza, dsdocumento, nmprimeiro, nmsegundo, dtregistro) ');
   LQueryPessoa.SQL.Add('VALUES (:flnatureza, :dsdocumento, :nmprimeiro, :nmsegundo, CURRENT_DATE) ');
-  LQueryPessoa.SQL.Add('RETURNING idpessoa');
+  LQueryPessoa.SQL.Add('RETURNING *');
   LQueryPessoa.Params.ParamByName('flnatureza').AsInteger := FParent.Natureza;
   LQueryPessoa.Params.ParamByName('dsdocumento').AsString := FParent.Documento;
   LQueryPessoa.Params.ParamByName('nmprimeiro').AsString := FParent.PrimeiroNome;
@@ -164,20 +161,17 @@ begin
   LConexao.StartTransaction;
   try
     LQueryPessoa.Open;
-
-    LIDPessoa := LQueryPessoa.DataSet.FieldByName('idpessoa').AsLargeInt;
-    LQueryEndereco.SQL.Add('INSERT INTO endereco (idpessoa , dscep) ');
-    LQueryEndereco.SQL.Add('VALUES (:idpessoa, :dscep)');
-    LQueryEndereco.Params.ParamByName('idpessoa').AsLargeInt := LIDPessoa;
-    LQueryEndereco.Params.ParamByName('dscep').AsString := FParent.Endereco.CEP;
-    LQueryEndereco.ExecSQL;
+    FPArent.ID := LQueryPessoa.DataSet.FieldByName('idpessoa').AsLargeInt;
+    FParent.Endereco.IDPessoa := FParent.ID;
+    LDAOEndereco.Inserir(LConexao);
+    FParent.EnderecoIntegracao.IDEndereco := FParent.Endereco.IDEndereco;
+    LDAOEnderecoIntegracao.Inserir(LConexao);
     LConexao.Commit;
   except
     LConexao.Rollback;
     raise;
   end;
-  ListarPorID(LIDPessoa);
-
+  ListarPorID(FParent.ID);
 end;
 
 function TDAOPessoa.IsEmpty: Boolean;
@@ -197,8 +191,8 @@ begin
   LQuery.SQL.Add(' WHERE p.idpessoa = :idpessoa');
   LQuery.Params.ParamByName('idpessoa').AsLargeInt := ID;
   LQuery.Open;
-  DatasetToEntity(FParent, LQuery.DataSet);
-  DatasetToList(LQuery.DataSet);
+  DatasetToEntity(FParent, LQuery);
+  DatasetToList(LQuery);
 end;
 
 function TDAOPessoa.ListarTodos: iDAOPessoa;
@@ -212,7 +206,7 @@ begin
 
   SQLPessoa(LQuery.SQL);
   LQuery.Open;
-  DatasetToList(LQuery.DataSet);
+  DatasetToList(LQuery);
 
 end;
 
@@ -238,8 +232,8 @@ end;
 
 procedure TDAOPessoa.SQLPessoa(SQL: TStrings);
 begin
-  SQL.Add('SELECT p.*, e.idpessoa as eidpessoa, e.idendereco, e.idendereco, e.dscep, ');
-  SQL.Add('ei.idendereco as iidendereco, ei.dsuf, ei.nmcidade, ei.nmbairro, ');
+  SQL.Add('SELECT p.*, e.idendereco, e.idendereco, e.dscep, ');
+  SQL.Add('ei.dsuf, ei.nmcidade, ei.nmbairro, ');
   SQL.Add('ei.nllogradouro, ei.dscomplemento FROM pessoa p ');
   SQL.Add('LEFT JOIN endereco e ON p.idpessoa = e.idpessoa ');
   SQL.Add('LEFT JOIN endereco_integracao ei ON e.idendereco = ei.idendereco');

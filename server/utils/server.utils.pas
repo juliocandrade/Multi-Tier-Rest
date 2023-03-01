@@ -1,15 +1,20 @@
 unit server.utils;
 
 interface
+uses
+  Data.DB;
 type
   TServerUtils = class
     class function DecodeURI(URI : String) : String;
     class function GetParamsFromURI(URI : String) : TArray<String>;
+    class procedure SetEmptyParamsToNull(aParams : TParams);
+    class procedure SetEmptyParamToNull(aParam : TParam);
   end;
 implementation
 
 uses
-  System.SysUtils;
+  System.SysUtils,
+  System.Classes;
 
 { TServerUtils }
 
@@ -25,6 +30,25 @@ class function TServerUtils.GetParamsFromURI(URI: String): TArray<String>;
 begin
   Result := URI.Split(['/']);
   Delete(Result,0, 2);
+end;
+
+class procedure TServerUtils.SetEmptyParamToNull(aParam: TParam);
+begin
+  case aParam.DataType of
+    ftString,
+    ftWideString :
+      if aParam.AsString.IsEmpty then
+        aParam.Clear;
+  end;
+end;
+
+class procedure TServerUtils.SetEmptyParamsToNull(aParams: TParams);
+var
+  I : Integer;
+begin
+  if Assigned(aParams) then
+    for I := 0 to Pred(aParams.count) do
+      SetEmptyParamToNull(aParams.Items[I]);
 end;
 
 end.

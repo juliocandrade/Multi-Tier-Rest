@@ -32,7 +32,8 @@ type
 implementation
 
 uses
-  System.SysUtils;
+  System.SysUtils,
+  server.utils;
 
 { TQueryFiredac }
 
@@ -58,6 +59,8 @@ end;
 function TQueryFiredac.ExecSQL: iQuery;
 begin
   Result := Self;
+
+  TServerUtils.SetEmptyParamsToNull(FParams);
   if Assigned(FParams) then
     FQuery.Params.assign(FParams);
 
@@ -86,6 +89,7 @@ end;
 function TQueryFiredac.Open(aSQL: String): iQuery;
 begin
   Result := Self;
+  TServerUtils.SetEmptyParamsToNull(FParams);
   FQuery.Close;
   FQuery.Open(aSQL);
 end;
@@ -93,6 +97,7 @@ end;
 function TQueryFiredac.Open: iQuery;
 begin
   Result := Self;
+  TServerUtils.SetEmptyParamsToNull(FParams);
   FQuery.Close;
   if Assigned(FParams) then
     FQuery.Params.Assign(FParams);
@@ -123,16 +128,17 @@ begin
   begin
     for CountField := 0 to Pred(aParams[CountParams].Count) do
     begin
+      TServerUtils.SetEmptyParamToNull(aParams[CountParams].Items[CountField]);
       case aParams[CountParams].Items[CountField].DataType of
-      ftString,
-      ftWideString :
-        FQuery.ParamByName(aParams[CountParams].Items[CountField].Name).AsStrings[CountParams] := aParams[CountParams].Items[CountField].AsString;
-      ftInteger :
-        FQuery.ParamByName(aParams[CountParams].Items[CountField].Name).AsIntegers[CountParams] := aParams[CountParams].Items[CountField].AsInteger;
-      ftLargeint :
-        FQuery.ParamByName(aParams[CountParams].Items[CountField].Name).AsLargeInts[CountParams] := aParams[CountParams].Items[CountField].AsLargeInt;
-      ftDate :
-        FQuery.ParamByName(aParams[CountParams].Items[CountField].Name).AsDates[CountParams] := aParams[CountParams].Items[CountField].AsDate;
+        ftString,
+        ftWideString :
+          FQuery.ParamByName(aParams[CountParams].Items[CountField].Name).AsStrings[CountParams] := aParams[CountParams].Items[CountField].AsString;
+        ftInteger :
+          FQuery.ParamByName(aParams[CountParams].Items[CountField].Name).AsIntegers[CountParams] := aParams[CountParams].Items[CountField].AsInteger;
+        ftLargeint :
+          FQuery.ParamByName(aParams[CountParams].Items[CountField].Name).AsLargeInts[CountParams] := aParams[CountParams].Items[CountField].AsLargeInt;
+        ftDate :
+          FQuery.ParamByName(aParams[CountParams].Items[CountField].Name).AsDates[CountParams] := aParams[CountParams].Items[CountField].AsDate;
       end;
     end;
   end;

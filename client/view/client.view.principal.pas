@@ -64,7 +64,6 @@ type
     procedure btnExcluirClick(Sender: TObject);
     procedure btnFecharClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure CardPanel1CardChange(Sender: TObject; PrevCard, NextCard: TCard);
   private
     { Private declarations }
     FTypeOperacao : TTypeOperacao;
@@ -136,7 +135,12 @@ begin
       .Documento(edtDocumento.Text)
       .PrimeiroNome(edtPrimeiroNome.Text)
       .SegundoNome(edtSegundoNome.Text)
-      .CEP(edtCEP.Text);
+      .CEP(edtCEP.Text)
+      .UF(edtUF.Text)
+      .Cidade(edtCidade.Text)
+      .Bairro(edtBairro.Text)
+      .Logradouro(edtLogradouro.Text)
+      .Complemento(edtComplemento.Text);
 
   case FTypeOperacao of
     toIncluir: FController.Pessoa.Services.Inserir;
@@ -144,12 +148,6 @@ begin
   end;
   CardPanel1.ActiveCard := CardGrid;
   Pesquisar;
-end;
-
-procedure TfrmPrincipal.CardPanel1CardChange(Sender: TObject; PrevCard,
-  NextCard: TCard);
-begin
-  stackEnderecoIntegracao.Visible := FTypeOperacao <> ToIncluir;
 end;
 
 procedure TfrmPrincipal.FormCreate(Sender: TObject);

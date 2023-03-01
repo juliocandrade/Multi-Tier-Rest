@@ -6,7 +6,7 @@ uses
   server.model.entity.pessoa,
   server.model.entity.endereco,
   server.model.entity.endereco.integracao,
-  System.Generics.Collections;
+  System.Generics.Collections, server.model.resource.interfaces;
 type
   iDAOGenericIterator<T> = interface
     ['{61625260-A81A-42FD-8C96-A985F189A63E}']
@@ -35,11 +35,20 @@ type
     ['{A3BFA938-5529-4FDE-883C-2D9DFC5B2458}']
     function ListarNaoAtualizados : iDAOEndereco;
     function List : iDAOGenericIterator<TModelEndereco>;
+    function Inserir : iDAOEndereco; overload;
+    function Inserir(aConexao : iConexao) : iDAOEndereco; overload;
+    function Alterar : iDAOEndereco; overload;
+    function Alterar(aConexao : iConexao) : iDAOEndereco; overload;
+    function DatasetToEntity(AEndereco : TModelEndereco; aQuery : iQuery) : iDAOEndereco;
   end;
 
   iDAOEnderecoIntegracao = interface
     ['{E5170CAD-75BF-44D4-9F74-56B626DE0973}']
-    function Inserir : iDAOEnderecoIntegracao;
+    function Inserir : iDAOEnderecoIntegracao; overload;
+    function Inserir(aConexao : iConexao) : iDAOEnderecoIntegracao; overload;
+    function Alterar : iDAOEnderecoIntegracao; overload;
+    function Alterar(aConexao : iConexao) : iDAOEnderecoIntegracao; overload;
+    function DatasetToEntity(AEnderecoIntegracao : TModelEnderecoIntegracao; aQuery : iQuery) : iDAOEnderecoIntegracao;
   end;
 
   iDAOFactory = interface
