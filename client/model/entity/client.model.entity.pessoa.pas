@@ -76,8 +76,6 @@ end;
 
 function TModelPessoa.GetDocumento: string;
 begin
-  if FDocumento.isEmpty then
-    raise Exception.Create('Documento não informado');
   Result := FDocumento;
 end;
 
@@ -88,22 +86,16 @@ end;
 
 function TModelPessoa.GetNatureza: integer;
 begin
-  if FNatureza = 0 then
-    raise Exception.Create('Natureza não informada');
   Result := FNatureza;
 end;
 
 function TModelPessoa.GetPrimeiroNome: string;
 begin
-  if FPrimeiroNome.isEmpty then
-    raise Exception.Create('Primeiro nome não informado');
   Result := FPrimeiroNome;
 end;
 
 function TModelPessoa.GetSegundoNome: string;
 begin
-  if FSegundoNome.isEmpty then
-    raise Exception.Create('Segundo nome não informado');
   Result := FSegundoNome;
 end;
 
@@ -114,6 +106,8 @@ end;
 
 procedure TModelPessoa.SetDocumento(const Value: string);
 begin
+  if Value.isEmpty then
+    raise Exception.Create('Documento não informado');
   FDocumento := Value;
 end;
 
@@ -124,16 +118,22 @@ end;
 
 procedure TModelPessoa.SetNatureza(const Value: integer);
 begin
+  if Value = 0 then
+    raise Exception.Create('Natureza não informada');
   FNatureza := Value;
 end;
 
 procedure TModelPessoa.SetPrimeiroNome(const Value: string);
 begin
+  if Value.isEmpty then
+    raise Exception.Create('Primeiro nome não informado');
   FPrimeiroNome := Value;
 end;
 
 procedure TModelPessoa.SetSegundoNome(const Value: string);
 begin
+  if Value.isEmpty then
+    raise Exception.Create('Segundo nome não informado');
   FSegundoNome := Value;
 end;
 

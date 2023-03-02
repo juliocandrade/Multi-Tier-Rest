@@ -19,13 +19,13 @@ uses
 
 function TModelEndereco.GetCEP: string;
 begin
-  if FCEP.isEmpty then
-    raise Exception.Create('CEP não informado');
   Result := FCEP;
 end;
 
 procedure TModelEndereco.SetCEP(const Value: string);
 begin
+  if Value.isEmpty then
+    raise Exception.Create('CEP não informado');
   FCEP := Value;
 end;
 

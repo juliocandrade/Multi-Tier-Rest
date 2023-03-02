@@ -11,8 +11,8 @@ type
     FParent : TModelPessoa;
     function ObjectToJSONString : string;
   public
-    constructor Create(aParent : TModelPessoa);
-    class function New(aParent : TModelPessoa) : iDAOPessoa;
+    constructor Create(aEntity : TModelPessoa);
+    class function New(aEntity : TModelPessoa) : iDAOPessoa;
     function Inserir : iDAOPessoa;
     function Excluir : iDaoPessoa;
     function Alterar : iDaoPessoa;
@@ -41,9 +41,9 @@ begin
   .Put;
 end;
 
-constructor TDAOPessoa.Create(aParent: TModelPessoa);
+constructor TDAOPessoa.Create(aEntity: TModelPessoa);
 begin
-  FParent := aParent;
+  FParent := aEntity;
 end;
 
 function TDAOPessoa.Excluir: iDaoPessoa;
@@ -71,9 +71,9 @@ begin
   .Post;
 end;
 
-class function TDAOPessoa.New(aParent: TModelPessoa): iDAOPessoa;
+class function TDAOPessoa.New(aEntity: TModelPessoa): iDAOPessoa;
 begin
-  Result := Self.Create(aParent);
+  Result := Self.Create(aEntity);
 end;
 
 function TDAOPessoa.ObjectToJSONString: string;

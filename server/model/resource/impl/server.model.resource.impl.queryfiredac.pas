@@ -75,6 +75,7 @@ function TQueryFiredac.ExecSQLArray(aParams: TArray<TParams>): iQuery;
 begin
   Result := Self;
   PrepareArrayParams(aParams);
+  FQuery.OptionsIntf.FormatOptions.StrsEmpty2Null := true;
   FQuery.Prepare;
   FQuery.Execute(Length(aParams), 0);
   if Assigned(FParams) then
@@ -128,7 +129,6 @@ begin
   begin
     for CountField := 0 to Pred(aParams[CountParams].Count) do
     begin
-      TServerUtils.SetEmptyParamToNull(aParams[CountParams].Items[CountField]);
       case aParams[CountParams].Items[CountField].DataType of
         ftString,
         ftWideString :

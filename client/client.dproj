@@ -100,19 +100,21 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="View\client.view.principal.pas">
+        <DCCReference Include="view\client.view.principal.pas">
             <Form>frmPrincipal</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="model\client.model.principal.pas">
             <Form>dmPrincipal</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="View\style\client.view.Style.pas"/>
-        <DCCReference Include="model\service\rest\client.model.service.rest.interfaces.pas">
-            <Form>$R *.res</Form>
+        <DCCReference Include="View\client.view.pessoas.pas">
+            <Form>frmPessoas</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="view\client.view.pessoas.lote.pas">
+            <Form>frmPessoasLote</Form>
+        </DCCReference>
+        <DCCReference Include="View\style\client.view.Style.pas"/>
         <DCCReference Include="model\service\rest\impl\client.model.service.rest.impl.clientrest.pas"/>
         <DCCReference Include="model\service\rest\impl\client.model.service.rest.impl.clientrest.params.pas"/>
         <DCCReference Include="model\entity\client.model.entity.pessoa.pas"/>
@@ -127,6 +129,10 @@
         <DCCReference Include="model\service\impl\client.model.services.impl.factory.pas"/>
         <DCCReference Include="model\service\client.model.service.interfaces.pas"/>
         <DCCReference Include="model\dao\impl\client.model.dao.impl.factory.pas"/>
+        <DCCReference Include="model\service\rest\client.model.service.rest.interfaces.pas"/>
+        <DCCReference Include="model\dao\impl\client.model.dao.impl.pessoa.lote.pas"/>
+        <DCCReference Include="controller\dto\impl\client.controller.dto.impl.pessoa.entity.pas"/>
+        <DCCReference Include="controller\dto\impl\client.controller.dto.impl.pessoa.lote.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
