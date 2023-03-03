@@ -88,7 +88,7 @@ implementation
 uses
   client.model.principal,
   client.view.Style,
-  client.controller.impl.factory;
+  client.controller.factory;
 
 { Tfrm }
 

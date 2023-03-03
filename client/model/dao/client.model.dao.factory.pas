@@ -1,4 +1,4 @@
-unit client.model.dao.impl.factory;
+unit client.model.dao.factory;
 
 interface
 
@@ -11,14 +11,14 @@ type
   private
   public
     class function New : iDAOFactory;
-    function Pessoa(aEntity : TModelPessoa) : IDAOPessoa;
+    function Pessoa : IDAOPessoa;
     function PessoaLote(aList : TObjectDictionary<integer, TModelPessoa>) :IDAOPessoaLote;
   end;
 implementation
 
 uses
-  client.model.dao.impl.pessoa,
-  client.model.dao.impl.pessoa.lote;
+  client.model.dao.pessoa,
+  client.model.dao.pessoa.lote;
 
 { TDAOFactory }
 
@@ -27,9 +27,9 @@ begin
   Result := Self.Create;
 end;
 
-function TDAOFactory.Pessoa(aEntity : TModelPessoa) : IDAOPessoa;
+function TDAOFactory.Pessoa : IDAOPessoa;
 begin
-  Result := TDAOPessoa.New(aEntity);
+  Result := TDAOPessoa.New;
 end;
 
 function TDAOFactory.PessoaLote(

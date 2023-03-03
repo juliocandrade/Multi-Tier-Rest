@@ -1,17 +1,17 @@
-unit client.model.service.rest.impl.clientrest;
+unit client.model.resource.rest.delphirestclient;
 
 
 interface
 
 uses
-  client.model.service.rest.interfaces,
+  client.model.resource.interfaces,
   REST.Types,
   REST.Client,
   Data.Bind.Components,
   Data.Bind.ObjectScope;
 
 type
-  TClientRest = class(TInterfacedObject, iRest)
+  TDelphiRestClient = class(TInterfacedObject, iRest)
   private
     FRESTClient: TRestClient;
     FRESTResponse: TRESTResponse;
@@ -38,17 +38,17 @@ implementation
 uses
   System.SysUtils,
   System.Classes,
-  client.model.service.rest.impl.ClientRest.Params,
+  client.model.resource.rest.Params,
   System.JSON;
 
-{ TClientRest }
+{ TDelphiRestClient }
 
-function TClientRest.Content: string;
+function TDelphiRestClient.Content: string;
 begin
   Result := FContent;
 end;
 
-constructor TClientRest.Create;
+constructor TDelphiRestClient.Create;
 begin
   FRESTClient := TRestClient.Create(nil);
   FRestClient.SynchronizedEvents := False;
@@ -61,7 +61,7 @@ begin
 
 end;
 
-function TClientRest.Delete: iRest;
+function TDelphiRestClient.Delete: iRest;
 begin
   FRestClient.BaseURL := FParams.BaseURL;
   FRestRequest.Method := rmDELETE;
@@ -74,7 +74,7 @@ begin
 
 end;
 
-destructor TClientRest.Destroy;
+destructor TDelphiRestClient.Destroy;
 begin
   FreeAndNil(FRESTClient);
   FreeAndNil(FRESTResponse);
@@ -82,7 +82,7 @@ begin
   inherited;
 end;
 
-procedure TClientRest.TratarStatusResposta;
+procedure TDelphiRestClient.TratarStatusResposta;
 var
   LJSONError : TJSONObject;
   LMensagemErro : String;
@@ -101,13 +101,13 @@ begin
   end;
 end;
 
-procedure TClientRest.DoJoinComponents;
+procedure TDelphiRestClient.DoJoinComponents;
 begin
   FRestRequest.Client := FRestClient;
   FRestRequest.Response := FRestResponse;
 end;
 
-function TClientRest.Get: iRest;
+function TDelphiRestClient.Get: iRest;
 begin
   FRestClient.BaseURL := FParams.BaseURL;
   FRestRequest.Method := rmGET;
@@ -119,17 +119,17 @@ begin
   FContent := FRestResponse.Content;
 end;
 
-class function TClientRest.New: iRest;
+class function TDelphiRestClient.New: iRest;
 begin
   Result := Self.Create;
 end;
 
-function TClientRest.Params: iRestParams;
+function TDelphiRestClient.Params: iRestParams;
 begin
   Result := FParams;
 end;
 
-function TClientRest.Post: iRest;
+function TDelphiRestClient.Post: iRest;
 begin
   FRestClient.BaseURL := FParams.BaseURL;
   FRestRequest.Method := rmPOST;
@@ -142,7 +142,7 @@ begin
   FContent := FRestResponse.Content;
 end;
 
-function TClientRest.Put: iRest;
+function TDelphiRestClient.Put: iRest;
 begin
   FRestClient.BaseURL := FParams.BaseURL;
   FRestRequest.Method := rmPUT;

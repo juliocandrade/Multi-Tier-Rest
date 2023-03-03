@@ -1,4 +1,4 @@
-unit client.model.dao.impl.pessoa.lote;
+unit client.model.dao.pessoa.lote;
 
 interface
 
@@ -20,8 +20,8 @@ implementation
 
 uses
   System.JSON,
-  REST.Json, client.model.service.rest.interfaces,
-  client.model.services.impl.factory;
+  REST.Json, client.model.resource.interfaces,
+  client.model.resource.factory;
 
 { TDAOPessoaLote }
 
@@ -34,7 +34,7 @@ function TDAOPessoaLote.Inserir: iDAOPessoaLote;
 var
   LRestClient : iRest;
 begin
-  LRestClient := TServiceFactory.New.Rest;
+  LRestClient := TResourceFactory.New.Rest;
   LRestClient
     .Params
       .EndPoint('pessoas/lote')

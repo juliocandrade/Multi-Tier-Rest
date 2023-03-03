@@ -1,8 +1,8 @@
-unit client.model.service.rest.impl.clientrest.params;
+unit client.model.resource.rest.params;
 
 interface
 uses
-  client.model.service.rest.interfaces;
+  client.model.resource.interfaces;
 type
   TClientRestParams = class(TInterfacedObject, iRestParams)
   private

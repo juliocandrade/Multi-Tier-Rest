@@ -389,7 +389,7 @@ object frmPessoas: TfrmPessoas
                 object Label1: TLabel
                   Left = 0
                   Top = 0
-                  Width = 320
+                  Width = 11
                   Height = 13
                   Align = alTop
                   Caption = 'ID'
@@ -406,7 +406,7 @@ object frmPessoas: TfrmPessoas
                 object Label2: TLabel
                   Left = 0
                   Top = 42
-                  Width = 320
+                  Width = 44
                   Height = 13
                   Align = alTop
                   Caption = 'Natureza'
@@ -422,7 +422,7 @@ object frmPessoas: TfrmPessoas
                 object Label3: TLabel
                   Left = 0
                   Top = 84
-                  Width = 320
+                  Width = 54
                   Height = 13
                   Align = alTop
                   Caption = 'Documento'
@@ -438,7 +438,7 @@ object frmPessoas: TfrmPessoas
                 object Label5: TLabel
                   Left = 0
                   Top = 126
-                  Width = 320
+                  Width = 68
                   Height = 13
                   Align = alTop
                   Caption = 'Primeiro Nome'
@@ -454,7 +454,7 @@ object frmPessoas: TfrmPessoas
                 object Label4: TLabel
                   Left = 0
                   Top = 168
-                  Width = 320
+                  Width = 72
                   Height = 13
                   Align = alTop
                   Caption = 'Segundo Nome'
@@ -470,7 +470,7 @@ object frmPessoas: TfrmPessoas
                 object Label6: TLabel
                   Left = 0
                   Top = 210
-                  Width = 320
+                  Width = 19
                   Height = 13
                   Align = alTop
                   Caption = 'CEP'
@@ -547,7 +547,7 @@ object frmPessoas: TfrmPessoas
                 object Label7: TLabel
                   Left = 0
                   Top = 0
-                  Width = 320
+                  Width = 13
                   Height = 13
                   Align = alTop
                   Caption = 'UF'
@@ -563,7 +563,7 @@ object frmPessoas: TfrmPessoas
                 object Label8: TLabel
                   Left = 0
                   Top = 42
-                  Width = 320
+                  Width = 33
                   Height = 13
                   Align = alTop
                   Caption = 'Cidade'
@@ -579,7 +579,7 @@ object frmPessoas: TfrmPessoas
                 object Label9: TLabel
                   Left = 0
                   Top = 84
-                  Width = 320
+                  Width = 28
                   Height = 13
                   Align = alTop
                   Caption = 'Bairro'
@@ -595,7 +595,7 @@ object frmPessoas: TfrmPessoas
                 object Label10: TLabel
                   Left = 0
                   Top = 126
-                  Width = 320
+                  Width = 55
                   Height = 13
                   Align = alTop
                   Caption = 'Logradouro'
@@ -611,7 +611,7 @@ object frmPessoas: TfrmPessoas
                 object Label11: TLabel
                   Left = 0
                   Top = 168
-                  Width = 320
+                  Width = 65
                   Height = 13
                   Align = alTop
                   Caption = 'Complemento'

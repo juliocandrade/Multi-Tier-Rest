@@ -88,7 +88,7 @@ var
 implementation
 
 uses
-  client.controller.impl.factory,
+  client.controller.factory,
   client.view.Style;
 
 {$R *.dfm}
@@ -133,9 +133,9 @@ end;
 procedure TfrmPessoasLote.btnEnviarClick(Sender: TObject);
 begin
   FController
-    .PessoaLote
+    .Pessoa
       .Services
-        .Inserir;
+        .InserirLote;
   LimparGrid;
   ShowMessage('Registros enviados com sucesso.');
 end;
@@ -147,8 +147,9 @@ begin
   LIDItem := StrToInt(edtID.Text);
 
   FController
-    .PessoaLote
-      .RemoverPessoa(LIDItem);
+    .Pessoa
+      .Lista
+        .RemoverPessoa(LIDItem);
 
   RemoverItemGrid;
   CardPanel1.ActiveCard := CardGrid;
@@ -171,7 +172,7 @@ var
   LIDItem : Integer;
 begin
   FController
-    .PessoaLote
+    .Pessoa
       .Entity
         .Natureza(edtNatureza.Text)
         .Documento(edtDocumento.Text)
@@ -187,13 +188,13 @@ begin
   case FTypeOperacao of
     toIncluir:
     begin
-      LIDItem := FController.PessoaLote.AdicionarPessoa;
+      LIDItem := FController.Pessoa.Lista.AdicionarPessoa;
       AdcionarItemGrid(LIDItem);
     end;
     toAlterar:
     begin
       LIDItem := StrToInt(listPessoas.Selected.Caption);
-      FController.PessoaLote.AtualizarPessoa(LIDItem);
+      FController.Pessoa.Lista.AtualizarPessoa(LIDItem);
       AtualizarItemGrid;
     end;
   end;
@@ -222,7 +223,8 @@ end;
 procedure TfrmPessoasLote.LimparGrid;
 begin
   FController
-    .PessoaLote
+    .Pessoa
+      .Lista
       .LimparLista;
   ListPessoas.Clear;
   AtualizarLabelRegistros;

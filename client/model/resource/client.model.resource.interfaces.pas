@@ -1,6 +1,7 @@
-unit client.model.service.rest.interfaces;
+unit client.model.resource.interfaces;
 
 interface
+
 type
   iRestParams = interface;
 
@@ -26,7 +27,10 @@ type
     function Accept : string; overload;
     function &End : iRest;
   end;
-
+  iServiceFactory = interface
+    ['{9F24D8DE-A659-44B1-A43E-E45AC398DC3C}']
+    function Rest : iRest;
+  end;
 implementation
 
 end.

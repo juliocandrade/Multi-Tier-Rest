@@ -256,9 +256,6 @@ object frmPessoasLote: TfrmPessoasLote
                 TabOrder = 0
                 ViewStyle = vsReport
                 OnDblClick = listPessoasDblClick
-                ExplicitTop = 0
-                ExplicitWidth = 767
-                ExplicitHeight = 169
               end
             end
           end
