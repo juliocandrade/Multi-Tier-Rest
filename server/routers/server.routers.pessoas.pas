@@ -7,11 +7,11 @@ implementation
 uses
 
   server.controller.interfaces,
-  server.controller.impl.controller,
+  server.controller.factory,
   System.SysUtils,
   server.model.exceptions,
   System.JSON,
-  server.model.service.provider.impl.core;
+  server.provider.core;
 
   function ValidarID(LID : String) : int64;
   begin
@@ -101,7 +101,7 @@ uses
     LController : iController;
   begin
     LController := TController.New;
-    LController.PessoaLote.JsonArrayStringToList(AReq.Body).Services.Inserir;
+    LController.Pessoa.JsonArrayStringToList(AReq.Body).Services.InserirLote;
     Ares.ResultStatusCode := 204;
   end;
 

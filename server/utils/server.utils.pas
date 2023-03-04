@@ -9,6 +9,7 @@ type
     class function GetParamsFromURI(URI : String) : TArray<String>;
     class procedure SetEmptyParamsToNull(aParams : TParams);
     class procedure SetEmptyParamToNull(aParam : TParam);
+    class function ApenasNumeros(valor : String) : String;
   end;
 implementation
 
@@ -17,6 +18,18 @@ uses
   System.Classes;
 
 { TServerUtils }
+
+class function TServerUtils.ApenasNumeros(valor: String): String;
+var
+  i: Integer;
+begin
+  for i := 0 to Length(valor) - 1 do
+    if not CharInSet(valor[i], ['0' .. '9']) then
+      delete(valor, i, 1);
+
+  valor := StringReplace(valor, ' ', '', [rfReplaceAll]);
+  Result := valor;
+end;
 
 class function TServerUtils.DecodeURI(URI: String): String;
 var

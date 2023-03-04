@@ -21,7 +21,7 @@ type
   end;
 implementation
 uses
-  System.SysUtils, server.model.exceptions;
+  System.SysUtils, server.model.exceptions, server.utils;
 
 { TModelEndereco }
 
@@ -29,7 +29,7 @@ function TModelEndereco.GetCEP: string;
 begin
   if FCEP.isEmpty then
     raise ECampoInvalido.Create('CEP não informado');
-  Result := FCEP;
+  Result := TServerUtils.ApenasNumeros(FCEP);
 end;
 
 function TModelEndereco.GetIDEndereco: int64;
