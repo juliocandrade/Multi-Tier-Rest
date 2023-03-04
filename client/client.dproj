@@ -131,6 +131,7 @@
         <DCCReference Include="controller\client.controller.pessoa.pas"/>
         <DCCReference Include="controller\client.controller.factory.pas"/>
         <DCCReference Include="controller\client.controller.interfaces.pas"/>
+        <DCCReference Include="utils\client.utils.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

@@ -22,7 +22,8 @@ uses
   client.controller.pessoa.dto in 'controller\client.controller.pessoa.dto.pas',
   client.controller.pessoa in 'controller\client.controller.pessoa.pas',
   client.controller.factory in 'controller\client.controller.factory.pas',
-  client.controller.interfaces in 'controller\client.controller.interfaces.pas';
+  client.controller.interfaces in 'controller\client.controller.interfaces.pas',
+  client.utils in 'utils\client.utils.pas';
 
 {$R *.res}
 
