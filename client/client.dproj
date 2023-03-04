@@ -124,7 +124,6 @@
         <DCCReference Include="model\resource\client.model.resource.rest.params.pas"/>
         <DCCReference Include="model\dao\client.model.dao.factory.pas"/>
         <DCCReference Include="model\dao\client.model.dao.interfaces.pas"/>
-        <DCCReference Include="model\dao\client.model.dao.pessoa.lote.pas"/>
         <DCCReference Include="model\dao\client.model.dao.pessoa.pas"/>
         <DCCReference Include="model\service\client.model.service.pessoa.pas"/>
         <DCCReference Include="model\service\client.model.service.interfaces.pas"/>

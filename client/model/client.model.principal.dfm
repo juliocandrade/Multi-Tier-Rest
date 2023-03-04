@@ -31,11 +31,12 @@ object dmPrincipal: TdmPrincipal
   end
   object RESTResponseDataSetAdapter: TRESTResponseDataSetAdapter
     Active = True
+    AutoUpdate = False
     Dataset = FDMemTablePessoa
     FieldDefs = <>
     ResponseJSON = RestResponsePessoa
     NestedElements = True
-    Left = 40
+    Left = 48
     Top = 200
   end
   object FDMemTablePessoa: TFDMemTable

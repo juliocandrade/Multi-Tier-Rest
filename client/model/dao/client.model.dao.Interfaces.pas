@@ -21,7 +21,6 @@ type
   iDAOFactory = interface
     ['{27E33AFD-BD5D-4AD7-87AC-98DCDFE857B9}']
     function Pessoa : IDAOPessoa;
-    function PessoaLote(aList : TObjectDictionary<integer,TModelPessoa>) : iDAOPessoaLote;
   end;
 implementation
 

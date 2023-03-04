@@ -61,11 +61,10 @@ begin
 end;
 
 procedure TdmPrincipal.Pesquisar;
-var
-  x : String;
 begin
   RESTRequestPessoa.Execute;
-  X:= RestResponsePessoa.Content;
+  if RestResponsePessoa.StatusCode = 200 then
+    RESTResponseDataSetAdapter.UpdateDataSet();
 end;
 
 function TdmPrincipal.ServerURL: String;

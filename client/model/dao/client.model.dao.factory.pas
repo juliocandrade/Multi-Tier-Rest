@@ -12,13 +12,11 @@ type
   public
     class function New : iDAOFactory;
     function Pessoa : IDAOPessoa;
-    function PessoaLote(aList : TObjectDictionary<integer, TModelPessoa>) :IDAOPessoaLote;
   end;
 implementation
 
 uses
-  client.model.dao.pessoa,
-  client.model.dao.pessoa.lote;
+  client.model.dao.pessoa;
 
 { TDAOFactory }
 
@@ -30,12 +28,6 @@ end;
 function TDAOFactory.Pessoa : IDAOPessoa;
 begin
   Result := TDAOPessoa.New;
-end;
-
-function TDAOFactory.PessoaLote(
-  aList: TObjectDictionary<integer, TModelPessoa>): IDAOPessoaLote;
-begin
-  Result := TDAOPessoaLote.New(aList);
 end;
 
 end.

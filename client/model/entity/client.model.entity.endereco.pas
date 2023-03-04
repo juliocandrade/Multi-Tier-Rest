@@ -7,13 +7,14 @@ type
     FCEP : string;
 
     function GetCEP: string;
-    procedure SetCEP(const Value: string);
+    procedure SetCEP(Value: string);
   public
     property CEP : string read GetCEP write SetCEP;
   end;
 implementation
 uses
-  System.SysUtils;
+  System.SysUtils,
+  client.utils;
 
 { TModelEndereco }
 
@@ -22,8 +23,9 @@ begin
   Result := FCEP;
 end;
 
-procedure TModelEndereco.SetCEP(const Value: string);
+procedure TModelEndereco.SetCEP(Value: string);
 begin
+  Value := TClientUtils.ApenasNumeros(Value);
   if Value.isEmpty then
     raise Exception.Create('CEP não informado');
   FCEP := Value;

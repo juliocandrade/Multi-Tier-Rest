@@ -16,7 +16,6 @@ uses
   client.model.resource.rest.params in 'model\resource\client.model.resource.rest.params.pas',
   client.model.dao.factory in 'model\dao\client.model.dao.factory.pas',
   client.model.dao.interfaces in 'model\dao\client.model.dao.interfaces.pas',
-  client.model.dao.pessoa.lote in 'model\dao\client.model.dao.pessoa.lote.pas',
   client.model.dao.pessoa in 'model\dao\client.model.dao.pessoa.pas',
   client.model.service.pessoa in 'model\service\client.model.service.pessoa.pas',
   client.model.service.interfaces in 'model\service\client.model.service.interfaces.pas',

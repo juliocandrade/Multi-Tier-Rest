@@ -27,7 +27,7 @@ end;
 function TController.Pessoa: iPessoa;
 begin
   if not Assigned(FPessoa) then
-    FPessoa := TPessoaDTO.New;
+    FPessoa := TPessoa.New;
   Result := FPessoa;
 end;
 

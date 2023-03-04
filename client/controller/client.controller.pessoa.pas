@@ -8,7 +8,7 @@ uses
   client.model.entity.pessoa,
   System.Generics.Collections;
 type
-  TPessoaDTO = class(TInterfacedObject, iPessoa, iPessoaLista)
+  TPessoa = class(TInterfacedObject, iPessoa, iPessoaLista)
   private
     FEntity : TModelPessoa;
 
@@ -36,14 +36,14 @@ uses
   client.controller.pessoa.dto,
   client.model.service.pessoa;
 
-{ TPessoaDTO }
+{ TPessoa }
 
-function TPessoaDTO.&End: iPessoa;
+function TPessoa.&End: iPessoa;
 begin
   Result := Self;
 end;
 
-function TPessoaDTO.AdicionarPessoa: integer;
+function TPessoa.AdicionarPessoa: integer;
 begin
   Inc(FIndiceAtual);
   FList.Add(FIndiceAtual, FEntity);
@@ -51,7 +51,7 @@ begin
   Result := FIndiceAtual;
 end;
 
-function TPessoaDTO.AtualizarPessoa(aIndex: Integer): iPessoaLista;
+function TPessoa.AtualizarPessoa(aIndex: Integer): iPessoaLista;
 var
   LPessoa : TModelPessoa;
 begin
@@ -62,14 +62,14 @@ begin
   FEntity := TModelPessoa.Create;
 end;
 
-constructor TPessoaDTO.Create;
+constructor TPessoa.Create;
 begin
   FEntity := TModelPessoa.Create;
   FIndiceAtual := 0;
   FList := TObjectDictionary<integer, TModelPessoa>.Create;
 end;
 
-destructor TPessoaDTO.Destroy;
+destructor TPessoa.Destroy;
 begin
   FEntity.Free;
   LimparLista;
@@ -77,12 +77,12 @@ begin
   inherited;
 end;
 
-function TPessoaDTO.Entity: iPessoaDTO<iPessoa>;
+function TPessoa.Entity: iPessoaDTO<iPessoa>;
 begin
   Result := TPessoaDTO<iPessoa>.New(Self, FEntity);
 end;
 
-procedure TPessoaDTO.InternalLimparLista;
+procedure TPessoa.InternalLimparLista;
 var
   LPessoa : TMOdelPessoa;
 begin
@@ -90,23 +90,23 @@ begin
     LPessoa.Free;
 end;
 
-function TPessoaDTO.LimparLista: iPessoaLista;
+function TPessoa.LimparLista: iPessoaLista;
 begin
   InternalLimparLista;
   FList.Clear;
 end;
 
-function TPessoaDTO.Lista: iPessoaLista;
+function TPessoa.Lista: iPessoaLista;
 begin
   Result := Self;
 end;
 
-class function TPessoaDTO.New: iPessoa;
+class function TPessoa.New: iPessoa;
 begin
   Result := Self.Create;
 end;
 
-function TPessoaDTO.RemoverPessoa(aIndex: Integer): iPessoaLista;
+function TPessoa.RemoverPessoa(aIndex: Integer): iPessoaLista;
 var
   LPessoa : TModelPessoa;
 begin
@@ -117,7 +117,7 @@ begin
   LPessoa.Free;
 end;
 
-function TPessoaDTO.Services: iServicePessoa;
+function TPessoa.Services: iServicePessoa;
 begin
   Result := TServicePessoa.New
     .Entity(FEntity)
